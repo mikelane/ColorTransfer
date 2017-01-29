@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block title %}Login{% endblock %}
+{% block login_buttons %}{% endblock %}
+{% block content %}
+
+
+<div id="login-box">
+    <div class="form-group">
+        <form method="post">
+            <label>Color Transfer: Login</label>
+            <input type="text" class="form-control" name="username" placeholder="Username">
+            <input type="password" class="form-control" name="password" placeholder="Password">
+            <div class="form-buttons">
+                <button type="submit" class="btn btn-primary">Login</button>
+                |
+                <a class="btn btn-primary" href="/register" role="button">Register</a>
+            </div>
+        </form>
+    </div>
+    {% if error %}
+    <div class="error">{{ error }}</div>
+    {% endif %}
+</div>
+
+{% endblock %}

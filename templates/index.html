@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block title %}Main{% endblock %}
+
+{% block login_buttons %}
+{% if username %}
+<section id="login-register">
+    Logged in as {{ username }} |
+    <a class="btn btn-primary" href="/logout" role="button">Logout</a>
+</section>
+{% else %}
+{{ super() }}
+{% endif %}
+{% endblock %}
+
+{% block content %}
+{% if username %}
+<section id="header" class="logged-in">
+    <h1>Michael Lane</h1>
+    <h5>CS510: Computer Vision</h5>
+    <h5>Project 1: Color Transfer</h5>
+</section>
+<section id="Images">
+    <div id="content">
+        <div class="row">
+            <div class="col-xs-6">
+                {% if source_image %}
+                <img src="{{ source_image }}" class="img-fluid ct-images" alt="Color Source Image">
+                <a href="/upload_source" role="button" class="btn btn-primary btn-lg btn-block">
+                    Change Source Image
+                </a>
+                {% else %}
+                <a href="/upload_source" role="button" class="btn btn-primary btn-lg btn-block">
+                    Upload Source Image
+                </a>
+                {% endif %}
+            </div>
+            <div class="col-xs-6">
+                {% if target_image %}
+                <img src="{{ target_image }}" class="img-fluid ct-images" alt="Target Image">
+                <a href="/upload_source" role="button" class="btn btn-primary btn-lg btn-block">
+                    Change Target Image
+                </a>
+                {% else %}
+                <a href="/upload_target" role="button" class="btn btn-primary btn-lg btn-block">
+                    Upload Target Image
+                </a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                {% if result_image %}
+                <img src="{{ result_image }}" class="img-fluid ct-images" alt="Resulting Image">
+                {% else %}
+                <a href="/transfer_color" role="button" class="btn btn-primary btn-lg btn-block">
+                    Generate Result
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% else %}
+<section id="intro">
+    <div class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="display-1">Color Transfer</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-2"><h5>Project 1</h5></div>
+            <div class="col-md-2"><h5>CS510: Intro to Visual Computing</h5></div>
+            <div class="col-md-2"><h5>Michael Lane</h5></div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}
+

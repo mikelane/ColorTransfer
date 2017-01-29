@@ -235,3 +235,5 @@ tags
 *.iml
 out
 gen
+/data/
+/users.db

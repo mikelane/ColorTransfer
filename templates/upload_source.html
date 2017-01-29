@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block title %}Upload Source Image{% endblock %}
+{% block login_buttons %}{% endblock %}
+{% block content %}
+
+<div id="upload_box">
+    <div id="source_image">
+        {% if source_url %}
+        <img src="{{ source_url }}">
+        {% else %}
+        <div class="placeholder">(source image)</div>
+        {% endif %}
+    </div>
+
+    <form method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        {{ form.source_photo }}
+        {% for error in form.source_photo.errors %}
+        <span style="color: red;">{{ error }}</span>
+        {% endfor %}
+        {{ form.submit }}
+    </form>
+</div>
+
+{% endblock %}

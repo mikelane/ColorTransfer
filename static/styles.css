@@ -1,0 +1,129 @@
+html,
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+}
+
+#header.logged-in {
+    position: absolute;
+}
+
+#intro {
+    display: block;
+    width: 100%;
+    padding: 20px;
+    margin: auto;
+    text-align: center;
+}
+
+#login-register {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+}
+
+#login-box,
+#registration-box {
+    margin: auto;
+    padding: 10px;
+}
+
+div.form-group {
+    background: #dddddd;
+    border: 1px solid #888888;
+    padding: 10px;
+}
+
+.error {
+    background: #ffdddd;
+    text-align: center;
+    color: #ff4444;
+    border: 1px solid #ff4444;
+    padding: 5px;
+}
+
+input.form-control {
+    margin: 5px 0;
+}
+
+div.form-buttons {
+    display: block;
+    margin: 0 5px;
+    text-align: center;
+}
+
+.form-group label {
+    text-align: center;
+    width: 100%;
+    padding: 0 5px;
+    color: #666;
+    font-weight: bold;
+    font-size: larger;
+    border-bottom: 1px solid #bbb;
+}
+
+#upload_box {
+    margin: auto;
+    min-width: 90%;
+    min-height: 90%;
+    position: relative;
+    display: flex;
+    border: 1px solid #888;
+}
+
+#source_image,
+#target_image {
+    margin: auto;
+    height: 100%;
+    display: flex;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+#source_image img,
+#target_image img {
+    max-width: 100%;
+    max-height: 100%;
+    margin: auto;
+}
+
+.placeholder {
+    vertical-align: middle;
+    margin: auto;
+    display: block;
+}
+
+#upload_box form {
+    text-align: center;
+    padding: 2px;
+    width: 100%;
+    position: absolute;
+    bottom: -33px;
+    left: 0;
+    color: #ffffff;
+    background: rgba(0, 0, 0, 0.35);
+}
+
+section#Images {
+    margin: auto;
+    padding:10px;
+    margin-top: 150px;
+}
+
+#Images #content .row {
+    margin-bottom: 20px;
+}
+
+#Images .ct-images {
+    margin-bottom: 5px;
+}
