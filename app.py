@@ -118,9 +118,10 @@ def upload_source():
     else:
         source_filename = None
 
+    source_url = photos.url(source_filename, session['username']) if source_filename else None
     return render_template('upload_source.html',
                            form=source_form,
-                           source_url=photos.url(db.get_image_fn('source_image', session['username'])),
+                           source_url=source_url,
                            username=session['username'])
 
 
@@ -138,9 +139,10 @@ def upload_target():
     else:
         target_filename = None
 
+    target_url = photos.url(target_filename, session['username']) if target_filename else None
     return render_template('upload_target.html',
                            form=target_form,
-                           target_url=photos.url(db.get_image_fn('target_image', session['username'])),
+                           target_url=target_url,
                            username=session['username'])
 
 
