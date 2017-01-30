@@ -70,15 +70,15 @@ SET {} = ?
 WHERE username = ?'''.format(column),
                       ('', username))
 
-    def store_image_url(self, column, url, username):
+    def store_image_fn(self, column, filename, username):
         with DBManager(self.file) as c:
             c.execute('''
 UPDATE users
 SET {} = ?
 WHERE username = ?'''.format(column),
-                      (url, username))
+                      (filename, username))
 
-    def get_image_url(self, column, username):
+    def get_image_fn(self, column, username):
         with DBManager(self.file) as c:
             c.execute('''
 SELECT {} FROM users

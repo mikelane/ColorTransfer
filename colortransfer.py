@@ -18,8 +18,7 @@ see http://www.pyimagesearch.com/2016/12/19/install-opencv-3-on-macos-with-homeb
 
 __author__ = "Mike Lane"
 __copyright__ = "Copyright 2017, Michael Lane"
-__license__ = "GPL"
-__version__ = "3.0"
+__license__ = "MIT"
 __email__ = "mikelane@gmail.com"
 
 import cv2
@@ -34,7 +33,10 @@ def image_stats(image):
     return l.mean(), l.std(), a.mean(), a.std(), b.mean(), b.std()
 
 
-def color_transfer(source, target):
+def color_transfer(source_fn, target_fn, result_fn):
+    source = cv2.imread(source_fn)
+    target = cv2.imread(target_fn)
+
     # Convert to Lab
     source = cv2.cvtColor(source, cv2.COLOR_BGR2LAB).astype('float32')
     target = cv2.cvtColor(target, cv2.COLOR_BGR2LAB).astype('float32')
@@ -68,11 +70,11 @@ def color_transfer(source, target):
 
     # Merge the l*a*b* colorspace and convert to RGB and return. Note, colors are
     # 8-bit unsigned ints.
-    return cv2.cvtColor(cv2.merge([l, a, b]).astype("uint8"), cv2.COLOR_LAB2BGR)
+    cv2.imwrite(result_fn, cv2.cvtColor(cv2.merge([l, a, b]).astype("uint8"), cv2.COLOR_LAB2BGR))
 
 
 if __name__ == '__main__':
-    source = cv2.imread('data/Testing/Seattle Skyline.jpg')
-    target = cv2.imread('data/Mike/target_image.jpg')
-    result = color_transfer(source, target)
-    cv2.imwrite('data/Testing/result_image.jpg', result)
+    source = 'data/Testing/Seattle Skyline.jpg'
+    target = 'data/Mike/target_image.jpg'
+    result = 'data/Testing/result_image.jpg'
+    color_transfer(source, target, result)

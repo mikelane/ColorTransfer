@@ -27,42 +27,47 @@
 <section id="Images">
     <div id="content">
         <div class="row">
-            <div class="col-xs-6">
-                {% if source_image %}
-                <img src="{{ source_image }}" class="img-fluid ct-images" alt="Color Source Image">
-                <a href="/upload_source" role="button" class="btn btn-primary btn-lg btn-block">
-                    Change Source Image
-                </a>
-                {% else %}
-                <a href="/upload_source" role="button" class="btn btn-primary btn-lg btn-block">
-                    Upload Source Image
-                </a>
-                {% endif %}
-            </div>
-            <div class="col-xs-6">
-                {% if target_image %}
-                <img src="{{ target_image }}" class="img-fluid ct-images" alt="Target Image">
-                <a href="/upload_source" role="button" class="btn btn-primary btn-lg btn-block">
-                    Change Target Image
-                </a>
-                {% else %}
-                <a href="/upload_target" role="button" class="btn btn-primary btn-lg btn-block">
-                    Upload Target Image
-                </a>
-                {% endif %}
-            </div>
+            <div class={% if result_image %}
+            "col-xs-4"{% else %}"col-xs-6"{% endif %}>
+            {% if source_image %}
+            <img src="{{ source_image }}" class="img-fluid ct-images" alt="Color Source Image">
+            <a href="/upload_source" role="button" class="btn btn-primary btn-lg btn-block">
+                Change Source Image
+            </a>
+            {% else %}
+            <a href="/upload_source" role="button" class="btn btn-primary btn-lg btn-block">
+                Upload Source Image
+            </a>
+            {% endif %}
         </div>
-        <div class="row">
-            <div class="col-xs-12">
-                {% if result_image %}
-                <img src="{{ result_image }}" class="img-fluid ct-images" alt="Resulting Image">
-                {% else %}
-                <a href="/transfer_color" role="button" class="btn btn-primary btn-lg btn-block">
-                    Generate Result
-                </a>
-                {% endif %}
-            </div>
+
+        <div class={% if result_image %}
+        "col-xs-4"{% else %}"col-xs-6"{% endif %}>
+        {% if target_image %}
+        <img src="{{ target_image }}" class="img-fluid ct-images" alt="Target Image">
+        <a href="/upload_target" role="button" class="btn btn-primary btn-lg btn-block">
+            Change Target Image
+        </a>
+        {% else %}
+        <a href="/upload_target" role="button" class="btn btn-primary btn-lg btn-block">
+            Upload Target Image
+        </a>
+        {% endif %}
+    </div>
+    {% if result_image %}
+    <div class="col-xs-4">
+        <img src="{{ result_image }}" class="img-fluid ct-images" alt="Resulting Image">
+    </div>
+    {% else %}
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <a class="btn btn-primary btn-block" href="/transfer_colors" role="button">
+                Transfer Colors
+            </a>
         </div>
+    </div>
+    {% endif %}
     </div>
 </section>
 {% else %}

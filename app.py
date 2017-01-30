@@ -1,6 +1,7 @@
 import os
 from glob import glob
 
+import colortransfer
 from flask import Flask, render_template, session, redirect, url_for, request, flash
 from flask_uploads import UploadSet, configure_uploads, IMAGES, patch_request_class
 from flask_wtf import FlaskForm
@@ -49,13 +50,17 @@ class UploadTargetForm(FlaskForm):
 @app.route('/')
 def index():
     if 'username' in session:
-        source_image = db.get_image_url('source_image', username=session['username'])
-        target_image = db.get_image_url('target_image', username=session['username'])
-        # TODO: add result image url handling
+        source_fn = db.get_image_fn('source_image', username=session['username'])
+        source_url = photos.url(source_fn) if source_fn else None
+        target_fn = db.get_image_fn('target_image', username=session['username'])
+        target_url = photos.url(target_fn) if target_fn else None
+        result_fn = db.get_image_fn('result_image', username=session['username'])
+        result_url = photos.url(result_fn) if result_fn else None
         return render_template('index.html',
                                username=session['username'],
-                               source_image=source_image,
-                               target_image=target_image)
+                               source_image=source_url,
+                               target_image=target_url,
+                               result_image=result_url)
     else:
         return render_template('index.html', username=None)
 
@@ -107,15 +112,15 @@ def upload_source():
         db.remove_image('source_image', session['username'])
         source_filename = photos.save(source_form.source_photo.data,
                                       name='data/{}/source_image.'.format(session['username']))
-        source_url = photos.url(source_filename)
-        db.store_image_url('source_image', source_url, session['username'])
+        # source_url = photos.url(source_filename)
+        db.store_image_fn('source_image', source_filename, session['username'])
         return redirect(url_for('index'))
     else:
-        source_url = None
+        source_filename = None
 
     return render_template('upload_source.html',
                            form=source_form,
-                           source_url=source_url,
+                           source_url=photos.url(db.get_image_fn('source_image', session['username'])),
                            username=session['username'])
 
 
@@ -127,16 +132,26 @@ def upload_target():
         db.remove_image('target_image', session['username'])
         target_filename = photos.save(target_form.target_photo.data,
                                       name='data/{}/target_image.'.format(session['username']))
-        target_url = photos.url(target_filename)
-        db.store_image_url('target_image', target_url, session['username'])
+        # target_url = photos.url(target_filename)
+        db.store_image_fn('target_image', target_filename, session['username'])
         return redirect(url_for('index'))
     else:
-        target_url = None
+        target_filename = None
 
     return render_template('upload_target.html',
                            form=target_form,
-                           target_url=target_url,
+                           target_url=photos.url(db.get_image_fn('target_image', session['username'])),
                            username=session['username'])
+
+
+@app.route('/transfer_colors', methods=['GET', 'POST'])
+def transfer_colors():
+    source_fn = db.get_image_fn('source_image', session['username'])
+    target_fn = db.get_image_fn('target_image', session['username'])
+    result_fn = 'data/{}/result.png'.format(session['username'])
+    colortransfer.color_transfer(source_fn, target_fn, result_fn)
+    db.store_image_fn('result_image', result_fn, session['username'])
+    return redirect(url_for('index'))
 
 
 if __name__ == '__main__':
