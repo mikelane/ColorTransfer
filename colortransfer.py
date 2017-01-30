@@ -38,10 +38,10 @@ def color_transfer(source_fn, target_fn, result_fn):
     target = cv2.imread(target_fn)
 
     # Convert to Lab
-    source = cv2.cvtColor(source, cv2.COLOR_BGR2LAB).astype('float32')
-    target = cv2.cvtColor(target, cv2.COLOR_BGR2LAB).astype('float32')
+    source = cv2.cvtColor(source, cv2.COLOR_BGR2Lab).astype('float32')
+    target = cv2.cvtColor(target, cv2.COLOR_BGR2Lab).astype('float32')
 
-    # compute color statistics for the source and target images
+    # Get the stats for the source and target images
     l_mean_src, l_std_src, a_mean_src, a_std_src, b_mean_src, b_std_src = image_stats(source)
     l_mean_tgt, l_std_tgt, a_mean_tgt, a_std_tgt, b_mean_tgt, b_std_tgt = image_stats(target)
 
@@ -68,13 +68,12 @@ def color_transfer(source_fn, target_fn, result_fn):
     a = np.clip(a, 0, 255)
     b = np.clip(b, 0, 255)
 
-    # Merge the l*a*b* colorspace and convert to RGB and return. Note, colors are
-    # 8-bit unsigned ints.
-    cv2.imwrite(result_fn, cv2.cvtColor(cv2.merge([l, a, b]).astype("uint8"), cv2.COLOR_LAB2BGR))
+    # Merge the l*a*b* colorspace and convert to RGB and return. Note, colors are 8-bit unsigned ints.
+    cv2.imwrite(result_fn, cv2.cvtColor(cv2.merge([l, a, b]).astype("uint8"), cv2.COLOR_Lab2BGR))
 
 
 if __name__ == '__main__':
-    source = 'data/Testing/Seattle Skyline.jpg'
+    source = 'data/Mike/source_image.jpg'
     target = 'data/Mike/target_image.jpg'
-    result = 'data/Testing/result_image.jpg'
+    result = 'data/Testing/result_image_Lab.png'
     color_transfer(source, target, result)

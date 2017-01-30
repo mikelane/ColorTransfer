@@ -148,7 +148,7 @@ def upload_target():
 def transfer_colors():
     source_fn = db.get_image_fn('source_image', session['username'])
     target_fn = db.get_image_fn('target_image', session['username'])
-    result_fn = 'data/{}/result.png'.format(session['username'])
+    result_fn = 'data/{}/result_image.png'.format(session['username'])
     colortransfer.color_transfer(source_fn, target_fn, result_fn)
     db.store_image_fn('result_image', result_fn, session['username'])
     return redirect(url_for('index'))
