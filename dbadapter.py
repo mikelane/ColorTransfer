@@ -1,10 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-"""
-An adapter for the SQLite3 database so that the ShowerThoughtBot class can
-make pythonic calls rather than database calls.
-"""
 
 __author__ = 'Mike Lane (http://www.github.com/mikelane/'
 __copyright__ = 'Copyright (c) 2015 Mike Lane'

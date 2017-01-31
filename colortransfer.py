@@ -33,13 +33,24 @@ def image_stats(image):
     return l.mean(), l.std(), a.mean(), a.std(), b.mean(), b.std()
 
 
-def color_transfer(source_fn, target_fn, result_fn):
+def color_transfer(source_fn, target_fn, result_fn, colorspace=1):
     source = cv2.imread(source_fn)
     target = cv2.imread(target_fn)
 
     # Convert to Lab
-    source = cv2.cvtColor(source, cv2.COLOR_BGR2Lab).astype('float32')
-    target = cv2.cvtColor(target, cv2.COLOR_BGR2Lab).astype('float32')
+    if colorspace == 1:
+        source = cv2.cvtColor(source, cv2.COLOR_BGR2Lab).astype('float32')
+        target = cv2.cvtColor(target, cv2.COLOR_BGR2Lab).astype('float32')
+
+    # Convert to HSV
+    elif colorspace == 2:
+        source = cv2.cvtColor(source, cv2.COLOR_BGR2HSV).astype('float32')
+        target = cv2.cvtColor(target, cv2.COLOR_BGR2HSV).astype('float32')
+
+    # Convert to YCrCb
+    else:
+        source = cv2.cvtColor(source, cv2.COLOR_BGR2YCrCb).astype('float32')
+        target = cv2.cvtColor(target, cv2.COLOR_BGR2YCrCb).astype('float32')
 
     # Get the stats for the source and target images
     l_mean_src, l_std_src, a_mean_src, a_std_src, b_mean_src, b_std_src = image_stats(source)
@@ -70,10 +81,16 @@ def color_transfer(source_fn, target_fn, result_fn):
 
     # Merge the l*a*b* colorspace and convert to RGB and return. Note, colors are 8-bit unsigned ints.
     cv2.imwrite(result_fn, cv2.cvtColor(cv2.merge([l, a, b]).astype("uint8"), cv2.COLOR_Lab2BGR))
+    # cv2.imwrite(result_fn, cv2.cvtColor(cv2.merge([l, a, b]).astype("uint8"), cv2.COLOR_HSV2BGR))
+    # cv2.imwrite(result_fn, cv2.cvtColor(cv2.merge([l, a, b]).astype("uint8"), cv2.COLOR_YCrCb2BGR))
 
 
 if __name__ == '__main__':
-    source = 'data/Mike/source_image.jpg'
-    target = 'data/Mike/target_image.jpg'
-    result = 'data/Testing/result_image_Lab.png'
-    color_transfer(source, target, result)
+    source = 'data/Joshua/source_image.png'
+    target = 'data/Joshua/target_image.jpg'
+    result_1 = 'data/Joshua/result_image_Lab.png'
+    result_2 = 'data/Joshua/result_image_HSV.png'
+    result_3 = 'data/Joshua/result_image_YCrCb.png'
+    color_transfer(source, target, result_1, 1)
+    color_transfer(source, target, result_2, 2)
+    color_transfer(source, target, result_3, 3)
